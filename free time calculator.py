@@ -11,3 +11,4 @@ for day, activity in data.items():
     weekFreeTime += dayFreeTime
     print("You have " + str(dayFreeTime) + " hours of free time on " + day + "s")
 print("You have " + str(weekFreeTime) + " of free time in a week")
+
