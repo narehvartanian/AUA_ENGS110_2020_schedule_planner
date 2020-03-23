@@ -9,3 +9,4 @@ for day, activity in data.items():
         jsonFile = open('schedule.json', 'w')
         json.dump(data, jsonFile)
         jsonFile.close()
+        
