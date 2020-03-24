@@ -1,6 +1,6 @@
 import json
-jsonFile = open('schedule.json', 'r')
-data = json.load(jsonFile)
+with open("schedule.json") as jsonFile:
+    data = json.load(jsonFile)
 jsonFile.close()
 weekFreeTime = 0
 for day, activity in data.items():
