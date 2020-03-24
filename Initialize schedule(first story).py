@@ -1,5 +1,5 @@
 import json
-with open("schedule1.json") as jsonFile:
+with open("schedule.json") as jsonFile:
     data = json.load(jsonFile)
 jsonFile.close()
 for day, activity in data.items():
@@ -19,7 +19,7 @@ for day, activity in data.items():
                     print("Your inserted hour is invalid, please insert a number less than 24.")
         if (total < 24):
             weekCheck = True
-            jsonFile = open("schedule1.json", "w")
+            jsonFile = open("schedule.json", "w")
             json.dump(data, jsonFile, indent=2)
             jsonFile.close()
         else:
