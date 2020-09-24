@@ -1,0 +1,56 @@
+bookList = [
+    {
+        "name": "Pride and Prejudice",
+        "author": "Jane Austen",
+        "year": 1813
+    },
+    {
+        "name": "A Beautiful Mind",
+        "author": "Sylvia Nasar",
+        "year": 1998
+    },
+    {
+        "name": "Gone with the Wind",
+        "author": "Margaret Mitchell",
+        "year": 1936
+    },
+    {
+        "name": "Harry Potter and The Chamber of Secrets",
+        "author": "J. K. Rowling",
+        "year": 1998
+    },
+    {
+        "name": "Harry Potter and The Order of Phoenix",
+        "author": "J. K. Rowling",
+        "year": 2003
+    },
+    {
+        "name": "Harry Potter and The Half Blood Prince",
+        "author": "J. K. Rowling",
+        "year": 2005
+    },
+    {
+        "name": "Harry Potter and The Goblet of Fire",
+        "author": "J. K. Rowling",
+        "year": 2000
+    },
+]
+
+def bubbleSort(my_list):
+    for i in range(0, len(my_list) - 1):
+        for j in range(0, len(my_list) - 1 - i):
+            if my_list[j]["year"] > my_list[j + 1]["year"]:
+                current = my_list[j]
+                my_list[j] = my_list[j + 1]
+                my_list[j + 1] = current
+    for i in range(len(my_list)):
+        print(f"Name: {my_list[i]['name']}")
+        print(f"Author: {my_list[i]['author']}")
+        print(f"Year: {my_list[i]['year']}")
+        print()
+
+
+def main():
+    bubbleSort(bookList)
+
+main()
