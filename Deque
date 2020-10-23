@@ -1,0 +1,318 @@
+class CyclicArray():
+    def __init__(self, size):
+        self.size = size
+
+        # initializing array with none
+        self.cycleArr = [None for i in range(size)]
+        self.front = self.rear = -1
+
+    def addFirst(self, data):
+
+        # condition if array is full
+        if ((self.rear + 1) % self.size == self.front):
+            for i in range(self.size):
+                self.cycleArr.append(None)
+            self.size = self.size * 2
+            self.front = (self.front - 1) % self.size
+            self.cycleArr[self.front] = data
+
+        # condition for empty array
+        elif (self.front == -1):
+            self.front = 0
+            self.rear = 0
+            self.cycleArr[self.front] = data
+        else:
+            self.front = (self.front - 1) % self.size
+            self.cycleArr[self.front] = data
+
+    def addLast(self, data):
+
+        # condition if array is full
+        if ((self.rear + 1) % self.size == self.front):
+            for i in range(self.size):
+                self.cycleArr.append(None)
+            self.size = self.size * 2
+            self.rear = (self.rear + 1) % self.size
+            self.cycleArr[self.rear] = data
+        # condition for empty array
+        elif (self.front == -1):
+            self.front = 0
+            self.rear = 0
+            self.cycleArr[self.rear] = data
+        else:
+            # next position of rear
+            self.rear = (self.rear + 1) % self.size
+            self.cycleArr[self.rear] = data
+
+    def removeFirst(self):
+        if (self.front == -1):  # codition for empty array
+            print("Array is Empty\n")
+
+        # condition for only one element
+        elif (self.front == self.rear):
+            temp = self.cycleArr[self.front]
+            self.front = -1
+            self.rear = -1
+            return temp
+        else:
+            temp = self.cycleArr[self.front]
+            self.front = (self.front + 1) % self.size
+            return temp
+
+    def removeLast(self):
+        if (self.front == -1):  # codition for empty array
+            print("Array is Empty\n")
+
+        # condition for only one element
+        elif (self.front == self.rear):
+            temp = self.cycleArr[self.front]
+            self.front = -1
+            self.rear = -1
+            return temp
+        else:
+            temp = self.cycleArr[self.rear]
+            self.rear = (self.rear - 1) % self.size
+            return temp
+
+    def first(self):
+        print(self.cycleArr[self.front])
+
+    def last(self):
+        print(self.cycleArr[self.rear])
+
+    def cyclicArrayPrint(self):
+
+        # condition for empty array
+        if (self.front == -1):
+            print("Array is Empty")
+
+        elif (self.rear >= self.front):
+            print("Elements in the cyclic array are:", end=" ")
+            for i in range(self.front, self.rear + 1):
+                print(self.cycleArr[i], end=" ")
+            print()
+
+        else:
+            print("Elements in cyclic array are:", end=" ")
+            for i in range(self.front, self.size):
+                print(self.cycleArr[i], end=" ")
+            for i in range(0, self.rear + 1):
+                print(self.cycleArr[i], end=" ")
+            print()
+
+        if ((self.rear + 1) % self.size == self.front):
+            print("Array is Full")
+
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+
+
+class LinkedList():
+    def __init__(self):
+        self.headval = None
+
+    # Print the linked list
+    def linkedListPrint(self):
+        printval = self.headval
+        while printval is not None:
+            print(printval.data)
+            printval = printval.next
+        print('\n')
+
+    def addFirst(self, newdata):
+        NewNode = Node(newdata)
+        # Update the new nodes next val to existing node
+        NewNode.next = self.headval
+        self.headval = NewNode
+
+    def addLast(self, newdata):
+        NewNode = Node(newdata)
+        if self.headval is None:
+            self.headval = NewNode
+            return
+        laste = self.headval
+        while (laste.next):
+            laste = laste.next
+        laste.next = NewNode
+
+    def removeFirst(self):
+        HeadVal = self.headval
+        if (HeadVal is not None):
+            self.headval = HeadVal.next
+            HeadVal = None
+            return
+
+        while (HeadVal is not None):
+            HeadVal = HeadVal.next
+
+        if (HeadVal == None):
+            return
+        HeadVal = None
+
+    def removeLast(self):
+        if self.headval == None:
+            return None
+        if self.headval.next == None:
+            self.headval = None
+            return None
+        second_last = self.headval
+        while (second_last.next.next):
+            second_last = second_last.next
+        second_last.next = None
+        return self.headval
+
+    def first(self):
+        print(f"First Node is: {self.headval.data}")
+
+    def last(self):
+        while self.headval.next is not None:
+            self.headval = self.headval.next
+        print(f"Last Node is: {self.headval.data}")
+
+
+class DoubleLinkedList:
+    def __init__(self):
+        self.headval = None
+
+    def addFirst(self, NewVal):
+        NewNode = Node(NewVal)
+        NewNode.next = self.headval
+        if self.headval is not None:
+            self.headval.prev = NewNode
+        self.headval = NewNode
+
+    def addLast(self, NewVal):
+        NewNode = Node(NewVal)
+        NewNode.next = None
+        if self.headval is None:
+            NewNode.prev = None
+            self.headval = NewNode
+            return
+        last = self.headval
+        while (last.next is not None):
+            last = last.next
+        last.next = NewNode
+        NewNode.prev = last
+        return
+
+    def insertBefore(self, prev_node, NewVal):
+        if prev_node is None:
+            return
+        NewNode = Node(NewVal)
+        NewNode.next = prev_node.next
+        prev_node.next = NewNode
+        NewNode.prev = prev_node
+        if NewNode.next is not None:
+            NewNode.next.prev = NewNode
+
+    def removeFirst(self):
+        if self.headval is None:
+            print("The list has no element to delete")
+            return
+        if self.headval.next is None:
+            self.headval = None
+            return
+        self.headval = self.headval.next
+        self.headval.prev = None
+
+    def removeLast(self):
+        if self.headval is None:
+            print("The list has no element to delete")
+            return
+        if self.headval.next is None:
+            self.headval = None
+            return
+        while self.headval.next is not None:
+            self.headval = self.headval.next
+        self.headval.prev.next = None
+
+    def first(self):
+        print(f"First Node is: {self.headval.data}")
+
+    def last(self):
+        while self.headval.next is not None:
+            self.headval = self.headval.next
+        print(f"Last Node is: {self.headval.data}")
+
+    def dLinkedListPrint(self):
+        while (self.headval is not None):
+            print(self.headval.data),
+            self.headval = self.headval.next
+
+def sortByIndexes(dll):
+    even_sub = []
+    odd_sub = []
+    compare = dll.headval
+    counter = 0
+    while compare is not None:
+        if counter % 2 == 0:
+            even_sub.append(compare.data)
+            counter += 1
+            compare = compare.next
+        elif counter % 2 == 1:
+            odd_sub.append(compare.data)
+            counter += 1
+            compare = compare.next
+    return even_sub, odd_sub
+
+
+def main():
+    # Cyclic Array Testing
+    cyclicArray = CyclicArray(6)
+    cyclicArray.addFirst("No. 1")
+    cyclicArray.addFirst("No. 2")
+    cyclicArray.addFirst("No. 3")
+    cyclicArray.addLast("No. 4")
+    cyclicArray.addLast("No. 5")
+    cyclicArray.first()
+    cyclicArray.last()
+    cyclicArray.cyclicArrayPrint()
+
+    # Linked List Testing
+    list1 = LinkedList()
+    list1.addFirst("LLNode 1")
+    list1.addFirst("LLNode 2")
+    list1.addFirst("LLNode 3")
+    list1.addFirst("LLNode 4")
+    list1.addLast("LLNode 5")
+    list1.linkedListPrint()
+    list1.removeFirst()
+    list1.linkedListPrint()
+    list1.removeLast()
+    list1.linkedListPrint()
+    list1.first()
+    list1.last()
+
+    # Double Linked List Testing
+    list2 = DoubleLinkedList()
+    list2.addFirst("DLLNode 1")
+    list2.addFirst("DLLNode 2")
+    list2.addFirst("DLLNode 3")
+    # list2.insertBefore(list2.headval,"DLLNode")
+    # list2.dLinkedListPrint()
+    # list2.addLast("DLLNode 4")
+    # list2.dLinkedListPrint()
+    # list2.removeFirst()
+    # list2.removeLast()
+    list2.first()
+    list2.dLinkedListPrint()
+
+    # double linked list even/odd indexes
+
+    List3 = DoubleLinkedList()
+    List3.addFirst("Anna")
+    List3.addLast("Lily")
+    List3.addFirst("Margot")
+    List3.addLast("Natalie")
+    List3.addFirst("Emma")
+    List3.addLast("Grace")
+    # List3.dLinkedListPrint()
+    # odd, even = sortByIndexes(List3)
+    # print(odd,even)
+
+
+main()
